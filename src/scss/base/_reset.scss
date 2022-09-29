@@ -1,0 +1,97 @@
+input,
+textarea,
+button {
+    outline: none;
+    font-family: inherit;
+    padding: 0;
+}
+input[type="radio"],
+input[type="checkbox"],
+input[type="submit"] {
+    appearance: none;
+    -moz-appearance: none;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+}
+label,
+a,
+button {
+    cursor: pointer;
+}
+label.error {
+    display: none !important;
+}
+.error {
+    border: 1px solid red;
+    color: red;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+    // user-select: none;
+    // -webkit-tap-highlight-color: transparent;
+}
+svg {
+    max-width: 100%;
+}
+button {
+    display: inline-block;
+    border: 0;
+    padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+legend {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+select {
+    // Убираем браузерную стрелку 
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+	outline: none;
+	cursor: pointer;
+	
+    
+    &:focus {
+        outline: none;
+    }
+    // Убираем стрелочку в IE 10 и 11
+    &::-ms-expand {
+        display: none;
+    }
+    
+}

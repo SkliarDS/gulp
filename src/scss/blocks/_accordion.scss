@@ -1,0 +1,22 @@
+
+.list {
+}
+.list__item {
+    position: relative;    
+}
+.list__item-hidden {    
+    max-height: 0;       
+    overflow: hidden;    
+    padding: 0 20px; 
+    will-change: max-height;
+    transition: all 0.3s ease-in-out;
+    &.hidden {        
+        padding: 20px;
+        box-sizing: content-box;
+    }
+}
+  
+
+
+
+

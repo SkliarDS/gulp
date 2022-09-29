@@ -1,0 +1,30 @@
+.flex-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex-jc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bg {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+@mixin text($col) {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    color: $col;
+}
+@mixin calc($property, $minsize, $maxsize) {
+    $addsize: $maxsize - $minsize;
+   #{$property}: calc(#{$minsize + px} + (#{$addsize}) * ((100vw - 320px) / (1200 - 320)));
+}
