@@ -66,7 +66,23 @@ document.addEventListener("DOMContentLoaded", function(){
 
     }); 
 
-   
+    //======== фиксированная шапка =============== 
+    const scrollHeaderFixed = () => {
+        let lastScrollTop = 0;
+        let scrollDistance = window.scrollY;      
+        if (scrollDistance > headerHeight) {
+            header.classList.add('header--fixed');
+            main.style.paddingTop = `${headerHeight}px`;
+        } else {
+            header.classList.remove('header--fixed');
+            main.style.paddingTop = null;            
+        }
+        lastScrollTop = scrollDistance;
+    }; 
+    
+    window.addEventListener('scroll', () => { 
+        // scrollHeaderFixed();
+    });
     
     // ====================Слайдер======================
     
@@ -325,39 +341,39 @@ document.addEventListener("DOMContentLoaded", function(){
     
         
 
-    let tabBlock = document.querySelectorAll('.tabs');
+    let tabBlock = document.querySelectorAll('[data-tabs]');
 
     tabBlock.forEach(element => {
-    let tabsParent = element.querySelector('ul');
-    let tabs = tabsParent.querySelectorAll('li');
-    let tabsContent = element.querySelectorAll('.tabs-content');
-    
-    
-    tabHideContent();
-    tabShowContent();
-
-    tabs.forEach((element, i) => {              
-        element.addEventListener('click', function(){
-            tabHideContent();
-            tabShowContent(i);
-        });          
+        let tabsParent = element.querySelector('ul');
+        let tabs = tabsParent.querySelectorAll('li');
+        let tabsContent = element.querySelectorAll('[data-tabs-content]');
         
-    });
+        
+        tabHideContent();
+        tabShowContent();
 
-    function tabHideContent() {
-        tabs.forEach(element => {
-        element.classList.remove('active');
+        tabs.forEach((element, i) => {              
+            element.addEventListener('click', function(){
+                tabHideContent();
+                tabShowContent(i);
+            });          
+            
         });
 
-        tabsContent.forEach(element => {
-        element.classList.remove('active');
-        });
-    }
+        function tabHideContent() {
+            tabs.forEach(element => {
+            element.classList.remove('active');
+            });
 
-    function tabShowContent(i = 0) {
-        tabs[i].classList.add('active');
-        tabsContent[i].classList.add('active');
-    }
+            tabsContent.forEach(element => {
+            element.classList.remove('active');
+            });
+        }
+
+        function tabShowContent(i = 0) {
+            tabs[i].classList.add('active');
+            tabsContent[i].classList.add('active');
+        }
     });
     
     
@@ -370,9 +386,9 @@ document.addEventListener("DOMContentLoaded", function(){
         let plus = item.querySelector('[data-check]');
         item.addEventListener('click', function() {
             let self = this.nextElementSibling;
-            self.classList.toggle('hidden');                                
+            self.classList.toggle('js-hidden');                                
             plus.classList.toggle('show');
-            if(self.classList.contains('hidden')){
+            if(self.classList.contains('js-hidden')){
                 self.style.maxHeight = self.scrollHeight + 'px';                  
             } else {
                 self.style.maxHeight = null;
@@ -380,23 +396,23 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     });
 
-     //======================== аккордеон с иконками на мобилке ===============================
-     const accordeonMob = document.querySelectorAll("[data-accordion-mob]");
-     if(accordeonMob !== null && window.innerWidth < 575){
-         accordeonMob.forEach(function (item) {
-             let plus = item.querySelector('[data-check]');
-             item.addEventListener('click', function() {
-                 let self = this.nextElementSibling;
-                 self.classList.toggle('hidden');                                
-                 plus.classList.toggle('show');
-                 if(self.classList.contains('hidden')){
-                     self.style.maxHeight = self.scrollHeight + 'px';                  
-                 } else {
-                     self.style.maxHeight = null;
-                 }
-             });
-         });
-     };
+    //======================== аккордеон с иконками на мобилке ===============================
+    const accordeonMob = document.querySelectorAll("[data-accordion-mob]");
+    if(accordeonMob !== null && window.innerWidth < 575){
+        accordeonMob.forEach(function (item) {
+            let plus = item.querySelector('[data-check]');
+            item.addEventListener('click', function() {
+                let self = this.nextElementSibling;
+                self.classList.toggle('js-hidden');                                
+                plus.classList.toggle('show');
+                if(self.classList.contains('js-hidden')){
+                    self.style.maxHeight = self.scrollHeight + 'px';                  
+                } else {
+                    self.style.maxHeight = null;
+                }
+            });
+        });
+    };
 
         //================== скролл на верх =============================================
 
@@ -613,7 +629,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }; 
     };
 
-    //========================= темноя тема =============================
+    //========================= темная тема =============================
 
     // день/ночь
     const themes = document.querySelectorAll('.theme');
@@ -671,7 +687,21 @@ document.addEventListener("DOMContentLoaded", function(){
             
        });
     });
-
+    const anchorsNames = document.querySelectorAll('[data-name-anchor]'); 
+    anchorsNames.forEach(function(anchor){ 
+        anchor.addEventListener('click', function(e){  
+            e.preventDefault();           
+            const blockId = anchor.dataset.nameAnchor;            
+            let block = document.querySelector(`#${blockId}`);
+            console.log("anchor.addEventListener  block", block)
+            block.classList.add('anchor');
+            block.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'                
+            });                     
+            
+        });
+    });
 
 });
 

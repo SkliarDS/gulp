@@ -1,27 +1,9 @@
-// .tabs {
-// }
-
-// .tab-list {
-//   cursor: pointer;
-// }
-// .tab-list__item {
-// }
-// .tab-content {
-// }
-// .hidden-tab {
-//   display: none;
-// }
-
-.tab-list li {
-  // cursor: pointer;
+[data-tabs] ul li {
+  cursor: pointer;
 }
-.tab-list li.active {
-  
+[data-tabs-content] {
+  display: none;  
 }
-.tabs-content {
-  display: none;
-  
-}
-.tabs-content.active {
+[data-tabs-content].active {
   display: block;
 }
