@@ -15,7 +15,6 @@ testWebP(function (support) {
 
 document.addEventListener("DOMContentLoaded", function(){
 
-// $(document).ready(function(){
 
     const navIcon = document.querySelector('.nav-icon');
     const mobMenu = document.querySelector('.mobile-menu');
