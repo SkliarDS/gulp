@@ -102,3 +102,11 @@
 .dropdown__input-hidden {
 	display: none;
 }
+.dropdown__list-scroll {
+    height: auto;
+    // height: 146px;
+    // padding: 10px 0px 10px 0px;
+}
+.dropdown__list-scroll--height {
+    height: 125px;
+}

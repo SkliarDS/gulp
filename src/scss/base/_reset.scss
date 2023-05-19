@@ -3,6 +3,9 @@
 *::after {
     box-sizing: border-box;
 }
+body > * {
+    flex-shrink: 0;
+}
 input,
 textarea,
 button {
@@ -101,15 +104,13 @@ select {
     -webkit-appearance: none;
     appearance: none;
 	outline: none;
-	cursor: pointer;
-	
+	cursor: pointer;    
+}
+select:focus {
+    outline: none;
     
-    &:focus {
-        outline: none;
-    }
-    // Убираем стрелочку в IE 10 и 11
-    &::-ms-expand {
-        display: none;
-    }
-    
+}
+select::-ms-expand {
+    // Убираем браузерную стрелку 
+    display: none;    
 }

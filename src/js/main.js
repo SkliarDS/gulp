@@ -330,12 +330,7 @@ document.addEventListener("DOMContentLoaded", function(){
             item.style.height = '100%';
         }
     });
-    // ==================== перезагрузка после отправки формы ==============
-    function reloadWin(){
-        setTimeout(function(){
-            location.reload();
-        }, 3000);
-    }   
+     
     // ================== Табы ============================================
     
         
@@ -428,29 +423,8 @@ document.addEventListener("DOMContentLoaded", function(){
     //  при нажатии скролится вверх на JS
     //  scrollTop.onclick = () => {
     //      window.scrollTo(0, 0);
-    //  };
-    //  на jquery
-    //  $('.scroll-top').click(function() {
-    //      $(window).scrollTop(0);
-    // });
-
-    //=========================== маска на тел ============================================
-    // $("body").css("opacity", "1");
-        
-    // $("#back-top").hide(),$(function(){$(window).scroll(function(){200<$(this).scrollTop()?$("#back-top").fadeIn():$("#back-top").fadeOut()}),$("#back-top a").click(function(){return $("body,html").animate({scrollTop:0},600),!1})});
-        
-    // $(".phone").mask("+7(999)999-99-99");
-    // $.fn.setCursorPosition = function (pos) {
-    //     if ($(this).get(0).setSelectionRange) {
-    //         $(this).get(0).setSelectionRange(pos, pos);
-    //     } else if ($(this).get(0).createTextRange) {
-    //         var range = $(this).get(0).createTextRange();
-    //         range.collapse(true);
-    //         range.moveEnd('character', pos);
-    //         range.moveStart('character', pos);
-    //         range.select();
-    //     }
-    // };
+    //  }; 
+    
 
     // ================отправка формы PHPMailer========================================
 
@@ -495,42 +469,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }
             fetchData();
         });
-    });
-
-    // ====================== Форма AJax ================================
-
-    // $(".zayavka").each(function (index, item) {
-    //     $(item).on('submit', function (event) {
-    //     event.preventDefault();
-        
-    //         ajaxFormSubmit();
-    //         function ajaxFormSubmit() {
-
-    //             let string = $(item).serialize(); 
-
-                
-    //             $.ajax({
-    //                 type: "POST", 
-    //                 url: "files/php/mail.php", 
-    //                 data: string, 
-
-                   
-    //                 success: function (html) {
-    //                     $(item).slideUp(800);                    
-    //                     // $(".answer").html(html);
-    //                     // window.location.href = './thankyou.html';
-    //                     // showMmodal();
-    //                     reloadWin();
-    //                 }
-    //             });
-                
-    //             return false;
-    //         }    
-    //     });
-    
-    // });
-
-    
+    });       
     
     
     //=======================================форма с кастомной валидацией валидация =================================
@@ -670,37 +609,64 @@ document.addEventListener("DOMContentLoaded", function(){
     addDarkClassHtml();
 
     //============================== Плавный скролл ==========================
-    const header = document.querySelector('.header');
-    const anchors = document.querySelectorAll('a[href*="#"]'); 
-    anchors.forEach(function(anchor){
-        let headerHeight = header.offsetHeight;
-        anchor.addEventListener('click', function(e){  
-        e.preventDefault();           
-        const blockId = anchor.getAttribute('href');            
-        let block = document.querySelector('' + blockId);
-            block.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-                
-            });                       
+  
+    // const anchorsNames = document.querySelectorAll('[data-name-anchor]'); 
+    // anchorsNames.forEach(function(anchor){ 
+    //     anchor.addEventListener('click', function(e){  
+    //         e.preventDefault();           
+    //         const blockId = anchor.dataset.nameAnchor;            
+    //         let block = document.querySelector(`#${blockId}`);
+    //         console.log("anchor.addEventListener  block", block)
+    //         block.classList.add('anchor');
+    //         block.scrollIntoView({
+    //             behavior: 'smooth',
+    //             block: 'start'                
+    //         });                     
             
-       });
-    });
+    //     });
+    // });
     const anchorsNames = document.querySelectorAll('[data-name-anchor]'); 
     anchorsNames.forEach(function(anchor){ 
         anchor.addEventListener('click', function(e){  
             e.preventDefault();           
             const blockId = anchor.dataset.nameAnchor;            
             let block = document.querySelector(`#${blockId}`);
-            console.log("anchor.addEventListener  block", block)
-            block.classList.add('anchor');
-            block.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'                
-            });                     
+            const topOffset = document.querySelector('.header').offsetHeight;
+            const elementPosition = block.getBoundingClientRect().top;
+            const offsetPosition = elementPosition - topOffset;
+            window.scrollBy({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });                    
             
         });
     });
+
+    // Скрытие текста 
+    const text_reviews = document.querySelectorAll('.text-visible');
+    if (text_reviews) {
+        
+        text_reviews.forEach(text => {
+            let style = getComputedStyle(text);
+            const lineHeight = parseInt(style.lineHeight);
+            const height = parseInt(style.height);
+            const btn = text.nextElementSibling;
+            const lines = Math.floor(height / lineHeight);
+            if (lines > 5) {
+                btn.style.display = 'block';	
+                text.classList.add('text-hidden');
+            }
+            btn.addEventListener('click', function() {
+                let text_before = this.previousElementSibling;
+                text_before.classList.toggle('text-hidden');
+                if (text_before.classList.contains('text-hidden')) {
+                    this.textContent = 'Читать отзыв';
+                } else {
+                    this.textContent = 'Скрыть отзыв';
+                }
+            });
+        });
+    }
 
 });
 
