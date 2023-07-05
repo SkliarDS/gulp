@@ -1,26 +1,22 @@
 @import 'fonts';
-// base
+/* === базовые стили === */
 @import "./base/reset";
 @import "./base/vars";
 @import "./base/mixins";
 @import "./base/base";
 @import "./base/typography";
+/* === /базовые стили === */
 
-// block
-// @import './blocks/tabs';
-// @import './blocks/mobile-menu';
+/* === Блоки ===*/
 // @import './blocks/nav-icon';
-// @import './blocks/scroll-top';
-// @import './blocks/modal';
+/* === /Блоки ===*/
 
-//page
-// @import './page/contacts';
+/* === Компоненты ===*/
+// @import './blocks/nav-icon';
+/* === /Компоненты ===*/
 
-
-// section
+/* === Секции ===*/
 // @import './section/header';
 // @import './section/footer';
+/* === /Секции ===*/
 
-
-//media
-// @import './media/media';
