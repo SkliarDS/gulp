@@ -19,7 +19,10 @@ document.addEventListener("DOMContentLoaded", function(){
     const navIcon = document.querySelector('.nav-icon');
     const mobMenu = document.querySelector('.mobile-menu');
     const overlay = document.querySelector('#overlay');    
+    const main = document.querySelector('.main');    
+    const header = document.querySelector('.header');    
     const bodyEl = document.body;
+    let header_height = header.offsetHeight;
 
     
     navIcon.addEventListener('click', function () {
@@ -66,8 +69,8 @@ document.addEventListener("DOMContentLoaded", function(){
     }); 
 
     //======== фиксированная шапка =============== 
+    let lastScrollTop = 0;
     const scrollHeaderFixed = () => {
-        let lastScrollTop = 0;
         let scrollDistance = window.scrollY;      
         if (scrollDistance > headerHeight) {
             header.classList.add('header--fixed');
@@ -79,6 +82,23 @@ document.addEventListener("DOMContentLoaded", function(){
         lastScrollTop = scrollDistance;
     }; 
     
+    function header_fixed() {
+        var currentScroll = window.scrollY || document.documentElement.scrollTop;       
+        
+        if (currentScroll > lastScrollTop){
+            header.classList.remove('header--fixed');
+            main.style.paddingTop = `${0}px`;
+        } else {
+            main.style.paddingTop = `${header_height}px`;
+            header.classList.add('header--fixed');
+        }
+        if(currentScroll == 0){
+            header.classList.remove('header--fixed');
+            main.style.paddingTop = `${0}px`;
+        }
+        lastScrollTop = currentScroll;
+    };
+
     window.addEventListener('scroll', () => { 
         // scrollHeaderFixed();
     });
