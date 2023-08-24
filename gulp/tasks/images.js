@@ -10,18 +10,13 @@ export const images = () => {
 			}))
 		)
 		.pipe(app.plugins.newer(app.path.build.images))
+		.pipe(webp())
 		// .pipe(
 		// 	app.plugins.if(
 		// 		app.isBuild,
 		// 		webp()
 		// 	)
 		// )
-		.pipe(
-			app.plugins.if(
-				app.isBuild,
-				app.gulp.dest(app.path.build.images)
-			)
-		)
 		.pipe(
 			app.plugins.if(
 				app.isBuild,
@@ -47,6 +42,7 @@ export const images = () => {
 		)
 		.pipe(app.gulp.dest(app.path.build.images))
 		.pipe(app.gulp.src(app.path.src.svg))
+		.pipe(app.plugins.newer(app.path.build.images))
 		.pipe(app.gulp.dest(app.path.build.images))
 		.pipe(app.plugins.browsersync.stream());
 }

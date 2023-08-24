@@ -9,7 +9,7 @@
     padding: 0 20px; 
     will-change: max-height;
     transition: all 0.3s ease-in-out;
-    &.js-hidden {        
+    &.js-visible {        
         padding: 20px;
         box-sizing: content-box;
     }

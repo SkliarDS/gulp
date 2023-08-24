@@ -13,7 +13,8 @@ document.querySelectorAll('.dropdown').forEach(function (dropDownWrapper) {
 	const dropDownList = dropDownWrapper.querySelector('.dropdown__list');
 	const dropDownListItems = dropDownList.querySelectorAll('.dropdown__list-item');
 	const dropDownInput = dropDownWrapper.querySelector('.dropdown__input-hidden');
-
+	let dropDownBtnHeight = dropDownBtn.offsetHeight;
+	dropDownList.style.top = `${dropDownBtnHeight}px`;
 
 	dropDownBtn.addEventListener('click', function (e) {
 		dropDownList.classList.toggle('dropdown__list--visible');

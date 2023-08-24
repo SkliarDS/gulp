@@ -1,4 +1,4 @@
-   
+	
 class Modal {
 	constructor(options) {
 		let defaultOptions = {
@@ -6,7 +6,7 @@ class Modal {
 			isClose: () => {},
 		}
 		this.options = Object.assign(defaultOptions, options);
-		this.modal = document.querySelector('.modal');
+		// this.modal = document.querySelector('.modal');
 		this.speed = false;
 		this.animation = false;
 		this.isOpen = false;
@@ -25,46 +25,45 @@ class Modal {
 	}
 
 	events() {
-		if (this.modal) {
-			document.addEventListener('click', function(e){
-				const clickedElement = e.target.closest('[data-path]');
-				if (clickedElement) {
-					let target = clickedElement.dataset.path;
-					let animation = clickedElement.dataset.animation;
-					let speed = clickedElement.dataset.speed;
-					this.animation = animation ? animation : 'fade';
-					this.speed = speed ? parseInt(speed) : 300;
-					this.modalContainer = document.querySelector(`[data-target="${target}"]`);
-					this.open();
-					return;
-				}
+		document.addEventListener('click', function(e){
+			const clickedElement = e.target.closest('[data-path]');
+			if (clickedElement) {
+				let target = clickedElement.dataset.path;
+				let animation = clickedElement.dataset.animation;
+				let speed = clickedElement.dataset.speed;
+				this.animation = animation ? animation : 'fade';
+				this.speed = speed ? parseInt(speed) : 200;
+				this.modal = document.querySelector('[data-target="' + target + '"]').closest('.modal');
+				this.modalContainer = document.querySelector('[data-target="' + target + '"]');
+				
+				this.open();
+				return;
+			}
+			if (!e.target.classList.contains('modal__container') && !e.target.closest('.modal__container') && this.isOpen) {
+				this.close();
+			}
+			if (e.target.closest('.modal-close')) {
+				this.close();
+				return;
+			}
+			
+			
+		}.bind(this));
 
-				if (e.target.closest('.modal-close')) {
-					this.close();
-					return;
-				}
-			}.bind(this));
-
-			window.addEventListener('keydown', function(e) {
-				if (e.keyCode == 27) {
-					if (this.isOpen) {
-						this.close();
-					}
-				}
-
-				if (e.keyCode == 9 && this.isOpen) {
-					this.focusCatch(e);
-					return;
-				}
-
-			}.bind(this));
-
-			this.modal.addEventListener('click', function(e) {
-				if (!e.target.classList.contains('modal__container') && !e.target.closest('.modal__container') && this.isOpen) {
+		window.addEventListener('keydown', function(e) {
+			if (e.keyCode == 27) {
+				if (this.isOpen) {
 					this.close();
 				}
-			}.bind(this));
-		}
+			}
+
+			if (e.keyCode == 9 && this.isOpen) {
+				this.focusCatch(e);
+				return;
+			}
+
+		}.bind(this));
+		
 	}
 
 	open() {
@@ -86,6 +85,7 @@ class Modal {
 	}
 
 	close() {
+		
 		if (this.modalContainer) {
 			this.modalContainer.classList.remove('animate-open');
 			this.modalContainer.classList.remove(this.animation);
@@ -166,3 +166,4 @@ const modal = new Modal({
 		// console.log('closed');
 	},
 });
+

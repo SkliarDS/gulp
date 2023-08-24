@@ -1,4 +1,4 @@
-import dartSass from 'sass';
+import * as dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 import rename from 'gulp-rename';
 import sourcemaps from 'gulp-sourcemaps';
@@ -42,17 +42,17 @@ export const scss = () => {
 			})
 		)
 	)
-	.pipe(
-		app.plugins.if(
-			app.isBuild,
-			webpcss(
-				{
-					webpClass: ".webp",
-					noWebpClass: ".no-webp"
-				}
-			)
-		)
-	)	
+	// .pipe(
+	// 	app.plugins.if(
+	// 		app.isBuild,
+	// 		webpcss(
+	// 			{
+	// 				webpClass: ".webp",
+	// 				noWebpClass: ".no-webp"
+	// 			}
+	// 		)
+	// 	)
+	// )	
 	.pipe(app.plugins.replace(/@img\//g, './../img/'))
 	.pipe(app.gulp.dest(app.path.build.css))
 	.pipe(app.plugins.browsersync.stream())
@@ -62,9 +62,9 @@ export const scss = () => {
 			cleanCss()
 		)
 	)
-	.pipe(rename({
-		extname: ".min.css"
-	}))
+	// .pipe(rename({
+	// 	extname: ".min.css"
+	// }))
 	.pipe(
 		app.plugins.if(
 			app.isDev,

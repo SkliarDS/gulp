@@ -19,9 +19,9 @@ export const js = () => {
 				uglify()
 			)			
 		)
-		.pipe(rename({
-			extname: ".min.js"
-		}))		
+		// .pipe(rename({
+		// 	extname: ".min.js"
+		// }))		
 		.pipe(app.gulp.dest(app.path.build.js))
 		.pipe(app.plugins.browsersync.stream());
 }

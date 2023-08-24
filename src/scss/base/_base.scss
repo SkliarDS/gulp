@@ -1,12 +1,40 @@
 /* base styles  */
 
 html {
-    height: 100%; 
-    // scroll-behavior: smooth;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-size: 0.834vw;
+    @media (max-width: 1440px) {
+        font-size: 1.11vw;
+    }
+    @media (max-width: $l) {
+        font-size: 1.25vw;
+    }
+    @media (max-width: $t) {
+        // font-size: 1vw;
+    }
+    @media (max-width: $mn) {
+        font-size: 1.5vw;
+    }
+    @media (max-width: $m) {
+        font-size: 2.1vw;
+    }
+    @media (max-width: $xx) {
+        font-size: 2.5vw;
+    }
+    @media (max-width: $x) {
+        font-size: 3.2vw;
+    }
+    @media (max-width: $xs) {
+        font-size: 3.2vw;
+    }
 }
 
 body {       
     margin: 0;
+    height: 100%;
     font-family: "MuseoSansCyrl", sans-serif;
     color: #000;
     font-size: 16px;
@@ -17,17 +45,14 @@ body {
     }
 }
 
-.body-sticky {
-    display: flex; 
-    flex-direction: column; 
-    justify-content: space-between;
-    height: 100%;
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
-
-.footer-sticky {
-    margin-top: auto;
+.main {
+    flex: 1 0 auto;
 }
-
 body > * {
     flex-shrink: 0; 
 }
@@ -77,10 +102,33 @@ body.noscroll {
     border-radius: 4px;
     background: rgba(153, 166, 183, 0.5);
 }
-
-.anchor {
-    padding-top: 100px;
-    margin-top: -100px;
-    -webkit-background-clip: content-box;
-    background-clip: content-box;
+label.invalid {
+    position: relative;
+    input {
+        &::placeholder {
+            color: #F00;
+        }
+    }
+    &::before {
+        position: absolute;
+        content: "";
+        background-color: #ff0000;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20px;
+        @media (min-width: $f) {
+            width: rem-size(10);
+            height: rem-size(10);
+            right: rem-size(20);
+        }
+    }
+}
+button:disabled {
+    opacity: 0.3;
+}
+.js-active {
+    animation: active 0.3s ease-in alternate; 
 }

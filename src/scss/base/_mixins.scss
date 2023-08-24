@@ -49,3 +49,9 @@
     $addsize: $maxsize - $minsize;
    #{$property}: calc(#{$minsize + px} + (#{$addsize}) * ((100vw - 320px) / (1200 - 320)));
 }
+@function rem-size($n) {
+    @return calc($n / 16) * 1rem;
+}
+@function mob-rem-size($n) {
+    @return calc($n / 12) * 1rem;
+}

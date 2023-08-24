@@ -14,7 +14,24 @@ testWebP(function (support) {
 });
 
 document.addEventListener("DOMContentLoaded", function(){
+    /* init Libs */ 
+    // var lazyLoadInstance = new LazyLoad({});
 
+    // AOS.init({
+    //     duration: 1000,
+    //     delay: 400,
+    //     offset: 100,
+    // });
+
+    // var rellax = new Rellax('.rellax', {
+    //     speed: 10,
+    //     center: true,
+    //     wrapper: null,
+    //     round: true,
+    //     vertical: true,
+    //     horizontal: false
+    // }); 
+    /* /init Libs*/
 
     const navIcon = document.querySelector('.nav-icon');
     const mobMenu = document.querySelector('.mobile-menu');
@@ -56,19 +73,63 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     });
 
-    //==========добовление активного класса в меню ========================
-    let navItemActive = document.querySelectorAll('.nav__item');    
-    navItemActive.forEach(function(item){
-        item.addEventListener('click', function(){
-            navItemActive.forEach(function(i){
-                i.classList.remove('nav__item--active');  
+    /* Показ/скрытие блоков */ 
+    function look_more(btnSelector, hidden_element) {
+        const btns = document.querySelectorAll(btnSelector);
+    
+        function handle_button_click(e) {
+            const btn = e.currentTarget;
+            const btn_content = btn.querySelector('span');
+            const btn_content_text = btn_content.dataset.lookMoreBtnContent;
+           
+            if (!handle_button_click.initialText) {
+                handle_button_click.initialText = btn_content.textContent;
+            }
+    
+            const hidden_elems = document.querySelectorAll(hidden_element);    
+            hidden_elems.forEach(elem => {
+                elem.classList.toggle('js-active');
             });
-            item.classList.add('nav__item--active');
+    
+            const anyElemActive = Array.from(hidden_elems).some(elem => elem.classList.contains('js-active'));               
+            btn_content.textContent = anyElemActive ? btn_content_text : handle_button_click.initialText;
+            btn.classList.toggle('active', anyElemActive);
+        };
+    
+        btns.forEach(btn => {
+            btn.addEventListener('click', handle_button_click);
         });
+    };
+    look_more('[data-look-more-btn]', '.--none');    
+    /* / Показ/скрытие блоков */
 
-    }); 
+    /* Скрытие текста */ 
+    function see_more_texts(text, lines_limit_selector, parent){
 
-    //======== фиксированная шапка =============== 
+        const texts = document.querySelectorAll(text);
+        if (texts) {            
+            texts.forEach(text => {
+                const btn = text.nextElementSibling;
+                const btn_content = btn.firstElementChild;
+                const btn_content_text = btn_content.dataset.lookMoreBtnContent;
+                const btn_content_text_default = btn_content.textContent;
+                btn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    text.classList.toggle(lines_limit_selector);
+                    !text.classList.contains(lines_limit_selector) ? btn_content.textContent = btn_content_text : btn_content.textContent = btn_content_text_default;
+                    
+                    text.closest(parent).classList.toggle('active');
+                    text.closest(parent).previousElementSibling.classList.toggle('active');
+                });
+            });
+        };
+    };
+    if(window.innerWidth <= 1000) {
+        see_more_texts('.advantages-card__text', 'advantages-card__text--hidden', '.advantages-card__desc');
+    }
+    /* /Скрытие текста */ 
+
+    /* фиксированная шапка */
     let lastScrollTop = 0;
     const scrollHeaderFixed = () => {
         let scrollDistance = window.scrollY;      
@@ -102,11 +163,10 @@ document.addEventListener("DOMContentLoaded", function(){
     window.addEventListener('scroll', () => { 
         // scrollHeaderFixed();
     });
-    
-    // ====================Слайдер======================
-    
-    const swiper = new Swiper('.aaa__swiper', {
-        
+    /* /фиксированная шапка */
+
+    /* Слайдер */    
+    const swiper = new Swiper('.aaa__swiper', {       
         
         loop: true,
         slidesPerView: 3,
@@ -116,7 +176,6 @@ document.addEventListener("DOMContentLoaded", function(){
             el: '.swiper-pagination',
         },
         breakpoints: {
-            // when window width is >= 320px
             320: {
               slidesPerView: 1,
             //   spaceBetween: 20
@@ -125,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function(){
               slidesPerView: 1,
             //   spaceBetween: 20
             },
-            // when window width is >= 480px
             768: {
               slidesPerView: 2,
               spaceBetween: 20
@@ -136,19 +194,17 @@ document.addEventListener("DOMContentLoaded", function(){
             },
             
         },
-        // Navigation arrows
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
-        
-        // And if we need scrollbar
         // scrollbar: {
         //   el: '.swiper-scrollbar',
         // },
     });
-    
-    //==============================================================slider1 на мобилке================================
+    /* /Слайдер */ 
+
+    /* Слайдер */    
 
     let slider1 = document.querySelector('.article__images')
     let  articleSwiper;
@@ -202,22 +258,13 @@ document.addEventListener("DOMContentLoaded", function(){
             mobileSlider1();
         });
     }
-    
+    /* /Слайдер */ 
 
-    
-    
-
-    
-    
-    //=======================================slider4==================
-
-    const aboutSwiper = new Swiper('.about__swiper', {
-        // Optional parameters
-        
+    /* Слайдер */ 
+    const aboutSwiper = new Swiper('.about__swiper', {        
         loop: true,
         slidesPerView: 1,
-        spaceBetween: 30,
-        // If we need pagination
+        spaceBetween: 30,        
         pagination: {
             el: '.swiper-pagination',
         },
@@ -225,45 +272,49 @@ document.addEventListener("DOMContentLoaded", function(){
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
-        },
-        
+        },       
         
     });
-    
-    //======================================slider с превьюшками кастомный========================
-    let sb = document.querySelectorAll('.slider-big'); 
+    /* /Слайдер */ 
+
+
+    /* Слайдер */ 
+    let sb = document.querySelectorAll('.hero__swiper'); 
     if(sb){
         sb.forEach(item => {
             let sliderBig = new Swiper (item,{
                 slidesPerView: 1,
-                loop: true,
                 observer: true,
                 observeParents: true,
                 observeSlideChildren: true,
                 nested: true,
                 pagination: {
-                    el: '.swiper-pagination',
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
+                    el: '.hero__pagination',
                 },
                 
-            });      
-            let swiperItems = item.querySelectorAll('.swiper-item');        
-                swiperItems.forEach(el=>{
-                    el.addEventListener('click', (e)=> {
-                        let index = e.currentTarget.dataset.card;
-                        sliderBig.slideTo(index);             
-                    });
+            }); 
+            let swiperItems = item.querySelectorAll('.hero__thumb'); /* добавление активного класса миниатюре при перелистованиии большого слайда */ 
+            sliderBig.on('slideChange', function () {
+                let activeSlideIndex = sliderBig.activeIndex;
+                swiperItems.forEach(el => {
+                    el.classList.remove('active');
+                    swiperItems[activeSlideIndex].classList.add('active');
                 });
-        }); 
-        
-        
-    }                     
-   
+            });     
+            swiperItems.forEach((el, index)=>{ /* клик по мениатюре для перелистованиии большого слайда */ 
+                el.dataset.card = index;
+                el.addEventListener('click', (e)=> {
+                    let index = e.currentTarget.dataset.card;
+                    sliderBig.slideTo(index);  
+                    swiperItems.forEach(item => item.classList.remove('active'));           
+                    el.classList.add('active');
+                });
+            });
+        });   
+    };                     
+    /* /Слайдер */ 
 
-    //===============================slider спревьюшками с библиотеки ===============================
+    /* Слайдер */ 
     const examplesSwoperBtns = new Swiper ('.examples-slider__btns',{
         
         spaceBetween: 15,
@@ -271,90 +322,24 @@ document.addEventListener("DOMContentLoaded", function(){
         freeMode: true,
         watchSlidesProgress: true,
     })
-    const examplesSwiper = new Swiper('.examples-slider__container', {
-                
+    const examplesSwiper = new Swiper('.examples-slider__container', {           
        
         slidesPerView: 1,
         // spaceBetween: 10,
         thumbs: {
             swiper: examplesSwoperBtns,
-          },
-        
+        },
         
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
-        },
-        
+        },       
         
     });
+    /* /Слайдер */ 
     
-    // ====================== модальные окна =========================
-
-    const modalButtons = document.querySelectorAll('[data-modal-button]');
-    const modalClosebuttons = document.querySelectorAll('[data-modal-close]');
-    const allModals = document.querySelectorAll('[data-modal]');
-
-    // Кнопки - Открыть Модалку
-    modalButtons.forEach(function (item) {
-        item.addEventListener('click', function () {
-            const modalId = this.dataset.modalButton;
-            const modal = document.querySelector('#' + modalId);
-            modal.classList.remove('hidden');
-            // bodyEl.classList.add('noscroll');
-
-            // Находим внутри открываемой модалки блок .modal-window и запрещаем ему передавать клики "наверх"
-            modal.querySelector('.modal-window').addEventListener('click', function (e) {
-                e.stopPropagation();
-            });
-        })
-    })
-
-    // Кнопки - Закрыть Модалку
-    modalClosebuttons.forEach(function (item) {
-        item.addEventListener('click', function () {
-            const modal = this.closest('[data-modal]');
-            modal.classList.add('hidden');
-            // bodyEl.classList.remove('noscroll');		
-        })
-    })
-
-    // Закрытие модалок по фейду
-    allModals.forEach(function (item) {
-        item.addEventListener('click', function () {
-            this.classList.add('hidden');
-            // bodyEl.classList.remove('noscroll');
-        });
-        
-    });
-
-    // Модалка ответ на отправку формы
-    let modalAnswer = document.querySelector('.answer');
-    function showMmodal(){
-        modalAnswer.classList.add('show-modal');
-        clouseModal.addEventListener('click', function(){
-            modalAnswer.classList.remove('show-modal');
-            window.location.reload();
-        }); 
-        setTimeout(function(){
-            mmodal.classList.remove('show-modal');
-            window.location.reload();
-        }, 4000); 
-    }; 
-                
-    // Если модалка не помещается по высоте добовляем скролл
-    let modalWindows = document.querySelectorAll('[data-modal]');
-    modalWindows.forEach(function(item){
-        let heightItem = item.offsetHeight;
-        if(heightItem > window.innerHeight) {
-            item.style.height = '100%';
-        }
-    });
      
-    // ================== Табы ============================================
-    
-        
-
+    /* Табы */
     let tabBlock = document.querySelectorAll('[data-tabs]');
 
     tabBlock.forEach(element => {
@@ -389,37 +374,37 @@ document.addEventListener("DOMContentLoaded", function(){
             tabsContent[i].classList.add('active');
         }
     });
-    
+    /* /Табы */
     
     
 
-    //======================== аккордеон с иконками ===============================
-    
+    /* аккордеон */    
     const accordeon = document.querySelectorAll("[data-accordion]");
     accordeon.forEach(function (item) {
         let plus = item.querySelector('[data-check]');
         item.addEventListener('click', function() {
             let self = this.nextElementSibling;
-            self.classList.toggle('js-hidden');                                
+            self.classList.toggle('js-visible');                                
             plus.classList.toggle('show');
-            if(self.classList.contains('js-hidden')){
+            if(self.classList.contains('jjs-visible')){
                 self.style.maxHeight = self.scrollHeight + 'px';                  
             } else {
                 self.style.maxHeight = null;
             }
         });
     });
+    /* /аккордеон */   
 
-    //======================== аккордеон с иконками на мобилке ===============================
+    /* аккордеон на мобилке */
     const accordeonMob = document.querySelectorAll("[data-accordion-mob]");
     if(accordeonMob !== null && window.innerWidth < 575){
         accordeonMob.forEach(function (item) {
             let plus = item.querySelector('[data-check]');
             item.addEventListener('click', function() {
                 let self = this.nextElementSibling;
-                self.classList.toggle('js-hidden');                                
+                self.classList.toggle('js-visible');                                
                 plus.classList.toggle('show');
-                if(self.classList.contains('js-hidden')){
+                if(self.classList.contains('js-visible')){
                     self.style.maxHeight = self.scrollHeight + 'px';                  
                 } else {
                     self.style.maxHeight = null;
@@ -427,8 +412,9 @@ document.addEventListener("DOMContentLoaded", function(){
             });
         });
     };
+    /* /аккордеон на мобилке */
 
-        //================== скролл на верх =============================================
+    /* скролл на верх */
 
     //  let scrollTop = document.querySelector('.scroll-top');
     //  window.onscroll = () => {
@@ -444,13 +430,13 @@ document.addEventListener("DOMContentLoaded", function(){
     //  scrollTop.onclick = () => {
     //      window.scrollTo(0, 0);
     //  }; 
-    
+     /* /скролл на верх */
 
-    // ================отправка формы PHPMailer========================================
+    /* отправка формы PHPMailer */
 
-    const telSelector = document.querySelectorAll('input[type="tel"]');
-    const inputMask = new Inputmask('+7 (999) 999-99-99');
-    inputMask.mask(telSelector);
+    // const telSelector = document.querySelectorAll('input[type="tel"]');
+    // const inputMask = new Inputmask('+7 (999) 999-99-99');
+    // inputMask.mask(telSelector);
 
     const forms = document.querySelectorAll('.form');
 
@@ -490,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function(){
             fetchData();
         });
     });       
-    
+    /* /отправка формы PHPMailer */
     
     //=======================================форма с кастомной валидацией валидация =================================
 
@@ -557,8 +543,7 @@ document.addEventListener("DOMContentLoaded", function(){
     
     
 
-    //================================ кнопка вкл видео ===================================
-    
+    /* кнопка вкл видео  */    
     const videos = document.querySelectorAll('.video-id');
     if(videos !== null){
         videos.forEach(item => {
@@ -586,10 +571,9 @@ document.addEventListener("DOMContentLoaded", function(){
             });
         }; 
     };
+    /* /кнопка вкл видео  */
 
-    //========================= темная тема =============================
-
-    // день/ночь
+    /* темная тема */   
     const themes = document.querySelectorAll('.theme');
     const html = document.querySelector('html');
     const themeImg = document.querySelector('.theme img');
@@ -627,9 +611,9 @@ document.addEventListener("DOMContentLoaded", function(){
         } catch (err){}
     }
     addDarkClassHtml();
+    /* темная тема */
 
-    //============================== Плавный скролл ==========================
-  
+    /* Плавный скролл  */  
     // const anchorsNames = document.querySelectorAll('[data-name-anchor]'); 
     // anchorsNames.forEach(function(anchor){ 
     //     anchor.addEventListener('click', function(e){  
@@ -651,9 +635,8 @@ document.addEventListener("DOMContentLoaded", function(){
             e.preventDefault();           
             const blockId = anchor.dataset.nameAnchor;            
             let block = document.querySelector(`#${blockId}`);
-            const topOffset = document.querySelector('.header').offsetHeight;
             const elementPosition = block.getBoundingClientRect().top;
-            const offsetPosition = elementPosition - topOffset;
+            const offsetPosition = elementPosition - header_height;
             window.scrollBy({
                 top: offsetPosition,
                 behavior: 'smooth'
@@ -661,32 +644,9 @@ document.addEventListener("DOMContentLoaded", function(){
             
         });
     });
+    /* /Плавный скролл  */
 
-    // Скрытие текста 
-    const text_reviews = document.querySelectorAll('.text-visible');
-    if (text_reviews) {
-        
-        text_reviews.forEach(text => {
-            let style = getComputedStyle(text);
-            const lineHeight = parseInt(style.lineHeight);
-            const height = parseInt(style.height);
-            const btn = text.nextElementSibling;
-            const lines = Math.floor(height / lineHeight);
-            if (lines > 5) {
-                btn.style.display = 'block';	
-                text.classList.add('text-hidden');
-            }
-            btn.addEventListener('click', function() {
-                let text_before = this.previousElementSibling;
-                text_before.classList.toggle('text-hidden');
-                if (text_before.classList.contains('text-hidden')) {
-                    this.textContent = 'Читать отзыв';
-                } else {
-                    this.textContent = 'Скрыть отзыв';
-                }
-            });
-        });
-    }
+   
 
 });
 
