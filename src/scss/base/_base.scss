@@ -81,26 +81,47 @@ body.noscroll {
     padding-left: 15px;
     padding-right: 15px;
 }
+.container-left {
+    padding-left: max(50px, (100% - 1440px) / 2);
+}
 .none {
     display: none !important;
 }
 .list-scrollbar  {  
     overflow-y: auto;
     scrollbar-color: rgba(153, 166, 183, 0.5) #fff;
-    scrollbar-width: thin; 
-}
-.list-scrollbar::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-    background-color: #FFFFFF;  
 }
 .list-scrollbar::-webkit-scrollbar-track {
-    background-color: #fff;
     border-radius: 4px;
+}
+.list-scrollbar::-webkit-scrollbar {
+    width: 3px;
+}
+.list-scrollbar::-webkit-scrollbar-track {
+    background-color: #ececec;
 }
 .list-scrollbar::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background: rgba(153, 166, 183, 0.5);
+    background: #c9ccd1;
+}
+.list-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #075D4E;
+}
+.none-scrollbar {
+    scrollbar-width: none;
+}
+
+.none-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+.none-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+.none-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+.none-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: transparent;
 }
 label.invalid {
     position: relative;
@@ -119,11 +140,6 @@ label.invalid {
         top: 50%;
         transform: translateY(-50%);
         right: 20px;
-        @media (min-width: $f) {
-            width: rem-size(10);
-            height: rem-size(10);
-            right: rem-size(20);
-        }
     }
 }
 button:disabled {

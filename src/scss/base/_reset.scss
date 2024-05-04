@@ -28,14 +28,6 @@ a,
 button {
     cursor: pointer;
 }
-label.error {
-    display: none !important;
-}
-.error {
-    border: 1px solid red;
-    color: red;
-}
-
 a,
 a:hover {
     text-decoration: none;
@@ -99,7 +91,6 @@ legend {
 }
 
 select {
-    // Убираем браузерную стрелку 
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -107,10 +98,8 @@ select {
 	cursor: pointer;    
 }
 select:focus {
-    outline: none;
-    
+    outline: none;    
 }
 select::-ms-expand {
-    // Убираем браузерную стрелку 
     display: none;    
 }
