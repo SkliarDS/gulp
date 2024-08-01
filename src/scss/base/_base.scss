@@ -107,12 +107,14 @@ body.noscroll {
 .list-scrollbar:hover::-webkit-scrollbar-thumb {
     background: #075D4E;
 }
+
 .none-scrollbar {
     scrollbar-width: none;
+    -ms-overflow-style: none; /* Для Internet Explorer и Edge */
 }
-
 .none-scrollbar::-webkit-scrollbar {
     width: 0px;
+    display: none; /* Для WebKit (Chrome, Safari, iOS Safari) */
 }
 .none-scrollbar::-webkit-scrollbar-track {
     background-color: transparent;

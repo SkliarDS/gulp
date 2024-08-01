@@ -9,17 +9,12 @@
     padding: 0 20px; 
     will-change: max-height;
     transition: all 0.3s ease-in-out;
-    &.js-visible {        
+    &.active {        
         padding: 20px;
         box-sizing: content-box;
     }
 }
-  
-[data-check] {
-    &.show {
-        transform: rotateX(180deg);
-    }
-}
+
 
 
 

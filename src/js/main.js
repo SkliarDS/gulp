@@ -73,26 +73,28 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     });
 
-    /* Показ/скрытие блоков */ 
-    function look_more(btnSelector, hidden_element) {
+     /* Показ/скрытие блоков */ 
+     function look_more(btnSelector, hidden_element) {
         const btns = document.querySelectorAll(btnSelector);
     
         function handle_button_click(e) {
             const btn = e.currentTarget;
-            const btn_content = btn.querySelector('span');
-            const btn_content_text = btn_content.dataset.lookMoreBtnContent;
+            const btn_content_text = btn.dataset.lookMoreBtn;
            
             if (!handle_button_click.initialText) {
-                handle_button_click.initialText = btn_content.textContent;
+                handle_button_click.initialText = btn.textContent;
             }
     
-            const hidden_elems = document.querySelectorAll(hidden_element);    
+            const hidden_elems = document.querySelectorAll(hidden_element); 
             hidden_elems.forEach(elem => {
                 elem.classList.toggle('js-active');
             });
     
             const anyElemActive = Array.from(hidden_elems).some(elem => elem.classList.contains('js-active'));               
-            btn_content.textContent = anyElemActive ? btn_content_text : handle_button_click.initialText;
+            btn.textContent = anyElemActive ? btn_content_text : handle_button_click.initialText;
+            if(!anyElemActive){
+                btn.scrollIntoView({ behavior: 'smooth', block: "center", inline: "start" });
+            }
             btn.classList.toggle('active', anyElemActive);
         };
     
@@ -100,7 +102,9 @@ document.addEventListener("DOMContentLoaded", function(){
             btn.addEventListener('click', handle_button_click);
         });
     };
-    look_more('[data-look-more-btn]', '.--none');    
+  
+    look_more('.product__tech-btn', '.technical-list .--none');    // указываем класс кнопки
+    look_more('.product-detail__btn', '.product-detail__cards .--none');    
     /* / Показ/скрытие блоков */
 
     /* Скрытие текста */ 
@@ -379,21 +383,35 @@ document.addEventListener("DOMContentLoaded", function(){
     
 
     /* аккордеон */    
-    const accordeon = document.querySelectorAll("[data-accordion]");
-    accordeon.forEach(function (item) {
-        let plus = item.querySelector('[data-check]');
+    // const accordeon = document.querySelectorAll("[data-accordion]");
+    // accordeon.forEach(function (item) {
+    //     const parent = item.closest('[data-accordion-parent]');  
+    //     const hidden_element = item.nextElementSibling;
+    //     item.addEventListener('click', function() {
+    //         parent.classList.toggle('active');                                  
+    //         hidden_element.classList.toggle('active'); 
+    //         item.classList.toggle('active'); 
+    //         if(hidden_element.classList.contains('active')){
+    //             hidden_element.style.maxHeight = hidden_element.scrollHeight + 'px';                  
+    //         } else {
+    //             hidden_element.style.maxHeight = null;
+    //         }
+    //     });
+    // });
+    /* /аккордеон */   
+
+    /* аккордеон GRID */    
+    const accordeons = document.querySelectorAll("[data-accordion]");
+    accordeons.forEach(function (item) {
+        const parent = item.closest('[data-accordion-parent]');  
+        const hidden_element = item.nextElementSibling;
         item.addEventListener('click', function() {
-            let self = this.nextElementSibling;
-            self.classList.toggle('js-visible');                                
-            plus.classList.toggle('show');
-            if(self.classList.contains('jjs-visible')){
-                self.style.maxHeight = self.scrollHeight + 'px';                  
-            } else {
-                self.style.maxHeight = null;
-            }
+            parent.classList.toggle('active');                                  
+            hidden_element.classList.toggle('active'); 
+            item.classList.toggle('active'); 
         });
     });
-    /* /аккордеон */   
+    /* /аккордеон */ 
 
     /* аккордеон на мобилке */
     const accordeonMob = document.querySelectorAll("[data-accordion-mob]");
