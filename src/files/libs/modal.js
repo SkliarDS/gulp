@@ -1,4 +1,4 @@
-	
+/* Modal */
 class Modal {
 	constructor(options) {
 		let defaultOptions = {
@@ -6,7 +6,6 @@ class Modal {
 			isClose: () => {},
 		}
 		this.options = Object.assign(defaultOptions, options);
-		// this.modal = document.querySelector('.modal');
 		this.speed = false;
 		this.animation = false;
 		this.isOpen = false;
@@ -31,8 +30,8 @@ class Modal {
 				let target = clickedElement.dataset.path;
 				let animation = clickedElement.dataset.animation;
 				let speed = clickedElement.dataset.speed;
-				this.animation = animation ? animation : 'fade';
-				this.speed = speed ? parseInt(speed) : 200;
+				this.animation = animation ? animation : 'fadeInUp';
+				this.speed = speed ? parseInt(speed) : 300;
 				this.modal = document.querySelector('[data-target="' + target + '"]').closest('.modal');
 				this.modalContainer = document.querySelector('[data-target="' + target + '"]');
 				
@@ -85,7 +84,6 @@ class Modal {
 	}
 
 	close() {
-		
 		if (this.modalContainer) {
 			this.modalContainer.classList.remove('animate-open');
 			this.modalContainer.classList.remove(this.animation);
@@ -155,6 +153,39 @@ class Modal {
 		});
 		document.body.style.paddingRight = '0px';
 	}
+
+	// Метод для открытия попапа по его ID
+	openPopupById(popup_id) {
+		const targetElement = document.querySelector(`[data-target="${popup_id}"]`);
+		if (targetElement) {
+			this.modal = targetElement.closest('.modal-grun');
+			this.modalContainer = targetElement;
+			this.animation = targetElement.dataset.animation || 'fadeInUp';
+			this.speed = parseInt(targetElement.dataset.speed) || 300;
+			this.open();
+		} else {
+			console.warn(`Modal with data-target="${popup_id}" not found.`);
+		}
+	}
+
+	// Метод для закрытия попапа по его ID
+	closePopupById(popup_id) {
+		const targetElement = document.querySelector(`[data-target="${popup_id}"]`);
+		if (targetElement && this.isOpen) {
+			this.modal = targetElement.closest('.modal');
+			this.modalContainer = targetElement;
+			this.close();
+		} else {
+			console.warn(`Modal with data-target="${popup_id}" not found or not open.`);
+		}
+	}
+
+	// Метод для закрытия текущего попапа
+	closePopup() {
+		if (this.isOpen) {
+			this.close();
+		}
+	}
 }
 
 const modal = new Modal({
@@ -167,3 +198,7 @@ const modal = new Modal({
 	},
 });
 
+
+// modal.openPopupById('feedback');
+// modal.closePopupById('feedback');
+// modal.closePopup();

@@ -5,30 +5,36 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    font-size: 0.834vw;
+    font-size: 0.521vw;
     @media (max-width: 1440px) {
-        font-size: 1.11vw;
+        font-size: 0.6vw;
     }
     @media (max-width: $l) {
-        font-size: 1.25vw;
+        font-size: 0.55vw;
     }
     @media (max-width: $t) {
-        // font-size: 1vw;
+        font-size: 0.8vw;
     }
     @media (max-width: $mn) {
-        font-size: 1.5vw;
+        font-size: 1vw;
     }
     @media (max-width: $m) {
-        font-size: 2.1vw;
+        font-size: 1.2vw;
     }
     @media (max-width: $xx) {
-        font-size: 2.5vw;
+        font-size: 1.5vw;
+    }
+    @media (max-width: $x480) {
+        font-size: 1.8vw;
     }
     @media (max-width: $x) {
-        font-size: 3.2vw;
+        font-size: 2vw;
     }
     @media (max-width: $xs) {
-        font-size: 3.2vw;
+        font-size: 2.65vw;
+    }
+    @media (max-width: $x360) {
+        font-size: 2.778vw;
     }
 }
 
@@ -75,11 +81,18 @@ body.noscroll {
 }
 
 .container {
-    max-width: 1230px;
+    --padding-container: 40px;
+    max-width: 188rem;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: var(--padding-container);
+    padding-right: var(--padding-container);
+    @media (max-width: $l) {
+        --padding-container: 20px;
+    }
+    @media (max-width: 359px) {
+        --padding-container: 10px;
+    }
 }
 .container-left {
     padding-left: max(50px, (100% - 1440px) / 2);
